@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:todo_practical/provider/todo_provider.dart';
-import 'package:todo_practical/screen/first_page.dart';
+import 'package:todo_practical/screen/todo_list_page.dart';
 import 'package:todo_practical/service/database_helper.dart'; // import your provider
 
 Future<void> main() async {

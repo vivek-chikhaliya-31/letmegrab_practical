@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:todo_practical/screen/second_page.dart';
 
 import '../model/todo_model.dart';
 import '../provider/todo_provider.dart';
+import 'add_todo_item_page.dart';
 
 class TodoDetailsPage extends StatelessWidget {
   final TodoModel todo;
