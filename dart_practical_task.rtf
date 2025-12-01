@@ -1,0 +1,72 @@
+{\rtf1\ansi\ansicpg1252\cocoartf2709
+\cocoatextscaling0\cocoaplatform0{\fonttbl\f0\fswiss\fcharset0 Helvetica;}
+{\colortbl;\red255\green255\blue255;}
+{\*\expandedcolortbl;;}
+\paperw11900\paperh16840\margl1440\margr1440\vieww11520\viewh8400\viewkind0
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+
+\f0\fs24 \cf0 import 'dart:convert';\
+\
+void main() \{\
+  // Given JSON String\
+  String jsonString = '''\
+  \{\
+    "animals": [\
+      \{ "animal": "dog,cat,dog,cow,monkey" \},\
+      \{ "animal": "cow,cat,cat,lion" \},\
+      \{ "animal": null \},\
+      \{ "animal": "" \}\
+    ]\
+  \}\
+  ''';\
+\
+  Map<String, dynamic> data = jsonDecode(jsonString);\
+\
+  // List to collect final animal counts across all objects\
+  Map<String, int> finalCounts = \{\};\
+\
+  List animalsList = data['animals'];\
+\
+  for (var item in animalsList) \{\
+    // Read the animal field safely\
+    String? raw = item['animal'];\
+\
+    // Skip null or empty entries\
+    if (raw == null || raw.trim().isEmpty) continue;\
+\
+    // Split into individual animals\
+    List<String> parts = raw.split(',');\
+\
+    // Trim spaces & remove empty values\
+    parts = parts.map((e) => e.trim()).where((e) => e.isNotEmpty).toList();\
+\
+    // Count inside this object\
+    Map<String, int> tempCount = \{\};\
+\
+    for (var animal in parts) \{\
+      tempCount[animal] = (tempCount[animal] ?? 0) + 1;\
+      finalCounts[animal] = (finalCounts[animal] ?? 0) + 1;\
+    \}\
+\
+    // Format output for this object\
+    String formattedOutput = tempCount.entries\
+        .map((e) \{\
+          return e.value > 1 ? "$\{e.key\}($\{e.value\})" : e.key;\
+        \})\
+        .join(", ");\
+\
+    print(formattedOutput);\
+  \}\
+\
+  print("\\n--- Final Combined Output ---");\
+\
+  // Format final collected counts\
+  String finalOutput = finalCounts.entries\
+      .map((e) \{\
+        return e.value > 1 ? "$\{e.key\}($\{e.value\})" : e.key;\
+      \})\
+      .join(", ");\
+\
+  print(finalOutput);\
+\}\
+}
